@@ -19,9 +19,9 @@ filetype plugin indent on    " required
 set laststatus=2
 " 显示光标当前位置
  set ruler
-" " 开启行号显示
+" 开启行号显示
  set number
-" " 高亮显示当前行/列
+" 高亮显示当前行/列
 set cursorline
 set cursorcolumn
 set hlsearch
@@ -33,8 +33,13 @@ nnoremap <Leader>l <C-W>l
 " 跳转至左方的窗口
  nnoremap <Leader>h <C-W>h
 
+"Spelling check
+"===============================================================================================
+autocmd BufNewFile,BufRead *.tex set spell
 
 
+" key map
+" ===============================================================================================
 imap <Leader>i <Plug>Tex_InsertItemOnThisLine
 nmap <Leader>f <Plug>(easymotion-bd-f)
 nmap <Leader><leader>f <Plug>(easymotion-overwin-f)
@@ -65,7 +70,6 @@ let g:syntastic_check_on_wq = 0
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabContextDefaultCompletionType = "<c-n>"
 let g:SuperTabDefaultCompletionType = "<c-x><c-k>"
-
 
 
 "Latex
