@@ -13,7 +13,7 @@ Plugin 'xuhdev/vim-latex-live-preview'
 Plugin 'ervandew/supertab'
 call vundle#end()            " required
 filetype plugin indent on    " required
-
+"==============================================================================================================
 
 "==============================================================================================================
 set laststatus=2
