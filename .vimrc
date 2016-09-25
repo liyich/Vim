@@ -4,54 +4,85 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'majutsushi/tagbar' 
 Plugin 'Raimondi/delimitMate'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'SirVer/ultisnips'
 Plugin 'scrooloose/syntastic'
-Plugin 'xuhdev/vim-latex-live-preview'
+Plugin 'vim-airline/vim-airline'
 Plugin 'ervandew/supertab'
+Plugin 'myint/clang-complete'
+Plugin 'scrooloose/nerdcommenter'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+""===============================
+let mapleader=' '
+map <F5> :call CompileRun()<CR>
+func SetTitle()
+		call append(line(".")+1, "/#/bin/bash")
+endfunc
+func! CompileRun()
+	exec "w"
+	if &filetype == 'cpp'
+		exec "!g++ % -o %<"
+		exec "! ./%<"
+	elseif &filetype == "java"
+		exec "!javac %"
+		exec "!java %<"
+	endif
+endfunc
 "==============================================================================================================
 set laststatus=2
 " 显示光标当前位置
  set ruler
-" 开启行号显示
  set number
+ set relativenumber
 " 高亮显示当前行/列
 set cursorline
 set cursorcolumn
 set hlsearch
 syntax enable
-" 允许用指定语法高亮配色方案替换默认方案
- syntax on
-" 自适应不同语言的智能缩进
-nnoremap <Leader>l <C-W>l
-" 跳转至左方的窗口
- nnoremap <Leader>h <C-W>h
+syntax on
+filetype plugin indent on
+set omnifunc=syntaxcomplete#Complete
+set completeopt=menu
+
+"complete
+"======================================================================================
+autocmd BufNewFile,BufRead *.js,*.php,*,html let g:SuperTabDefaultCompletionType = "<c-x><c-o><c-p>"
+autocmd BufNewFile,BufRead *.tex let g:SuperTabDefaultCompletionType = "<c-x><c-k><c-p>"
+inoremap <expr> <CR> pumvisible() ? "<c-y>":"<CR>"
+
 
 "Spelling check
-"===============================================================================================
+"==============================================================================================
 autocmd BufNewFile,BufRead *.tex set spell
 
+"latex table
+"===============================================================================================
+autocmd BufNewFile,BufRead *.sh ":call SetTile()"
 
 " key map
 " ===============================================================================================
-imap <Leader>i <Plug>Tex_InsertItemOnThisLine
+nmap <Leader>i o<Plug>Tex_InsertItemOnThisLine
 nmap <Leader>f <Plug>(easymotion-bd-f)
 nmap <Leader><leader>f <Plug>(easymotion-overwin-f)
-nmap <F8> :TagbarToggle<CR>
-nmap <F2> :NERDTreeToggle<CR>
+nnoremap <F2> :NERDTreeToggle<CR>
+nnoremap <Leader>l <C-W>l
+nnoremap <Leader>h <C-W>h
+nnoremap <Leader>k <C-W>k
+nnoremap <Leader>j <C-W>j
+" nnoremap <leader>p <plug>NERDCommenterToggle
 
-
+"clang
+"=================================================================================
+let g:clang_library_path='/usr/lib/llvm-3.8/lib/libclang.so.1'
 
 "ultisnips
 "==============================================================================================================
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 "syntastic
 "==============================================================================================================
@@ -67,9 +98,6 @@ let g:syntastic_check_on_wq = 0
 "supertab
 "==============================================================================================================
 let g:SuperTabDefaultCompletionType = "<c-n>"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
-let g:SuperTabDefaultCompletionType = "<c-x><c-k>"
-
 
 "Latex
 "==============================================================================================================
@@ -93,3 +121,17 @@ filetype indent on
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
 
+
+
+"commenter
+"====================================================================================
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+
+
+if has("autocmd")  
+	au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"  
+	au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"  
+	au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"  
+endif 
