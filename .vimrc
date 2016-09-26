@@ -4,7 +4,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'Raimondi/delimitMate'
+Plugin 'jiangmiao/auto-pairs'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'SirVer/ultisnips'
 Plugin 'scrooloose/syntastic'
@@ -19,7 +19,7 @@ filetype plugin indent on    " required
 let mapleader=' '
 map <F5> :call CompileRun()<CR>
 func SetTitle()
-		call append(line(".")+1, "/#/bin/bash")
+	call append(line(".")+1, "/#/bin/bash")
 endfunc
 func! CompileRun()
 	exec "w"
@@ -34,9 +34,9 @@ endfunc
 "==============================================================================================================
 set laststatus=2
 " 显示光标当前位置
- set ruler
- set number
- set relativenumber
+set ruler
+set number
+set relativenumber
 " 高亮显示当前行/列
 set cursorline
 set cursorcolumn
@@ -46,7 +46,7 @@ syntax on
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu
-
+set si
 "complete
 "======================================================================================
 autocmd BufNewFile,BufRead *.js,*.php,*,html let g:SuperTabDefaultCompletionType = "<c-x><c-o><c-p>"
@@ -68,12 +68,17 @@ nmap <Leader>i o<Plug>Tex_InsertItemOnThisLine
 nmap <Leader>f <Plug>(easymotion-bd-f)
 nmap <Leader><leader>f <Plug>(easymotion-overwin-f)
 nnoremap <F2> :NERDTreeToggle<CR>
+nnoremap <F3> gg=G
+nnoremap <F4> :set ft=html<cr>gg=G:set ft=php<cr>gg=G
 nnoremap <Leader>l <C-W>l
 nnoremap <Leader>h <C-W>h
 nnoremap <Leader>k <C-W>k
 nnoremap <Leader>j <C-W>j
-" nnoremap <leader>p <plug>NERDCommenterToggle
-
+nnoremap <Leader><Leader>k :lp<cr>
+nnoremap <Leader><Leader>j :lne<cr>
+nnoremap <Leader><Leader>k :lp<cr>
+nnoremap <Leader>1 :set ft=php<cr>
+nnoremap <Leader>2 :set ft=html<cr>
 "clang
 "=================================================================================
 let g:clang_library_path='/usr/lib/llvm-3.8/lib/libclang.so.1'
@@ -129,9 +134,3 @@ let g:tex_flavor='latex'
 let g:NERDSpaceDelims = 1
 
 
-
-if has("autocmd")  
-	au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"  
-	au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"  
-	au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"  
-endif 
