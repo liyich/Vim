@@ -17,7 +17,7 @@ filetype plugin indent on    " required
 
 ""===============================
 let mapleader=' '
-map <F5> :call CompileRun()<CR>
+map <F6> :call CompileRun()<CR>
 func SetTitle()
 	call append(line(".")+1, "/#/bin/bash")
 endfunc
@@ -64,12 +64,14 @@ autocmd BufNewFile,BufRead *.sh ":call SetTile()"
 
 " key map
 " ===============================================================================================
+
 nmap <Leader>i o<Plug>Tex_InsertItemOnThisLine
 nmap <Leader>f <Plug>(easymotion-bd-f)
 nmap <Leader><leader>f <Plug>(easymotion-overwin-f)
 nnoremap <F2> :NERDTreeToggle<CR>
 nnoremap <F3> gg=G
 nnoremap <F4> :set ft=html<cr>gg=G:set ft=php<cr>gg=G
+nnoremap <F5> :!cd /var/www/html;ctags -R;<cr><cr>:set tags+=/var/www/html/tags<cr>
 nnoremap <Leader>l <C-W>l
 nnoremap <Leader>h <C-W>h
 nnoremap <Leader>k <C-W>k
